@@ -1,0 +1,25 @@
+{
+  "name": "espace-hardhat-template",
+  "version": "0.1.0",
+  "description": "Conflux Espace Hardhat Template",
+  "homepage": "https://github.com/cfxdevkit/repository-template#readme",
+  "bugs": {
+    "url": "https://github.com/cfxdevkit/repository-template/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/cfxdevkit/repository-template.git"
+  },
+  "license": "ISC",
+  "author": "SP",
+  "type": "commonjs",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "devDependencies": {
+    "@nomicfoundation/hardhat-ignition-viem": "^0.15.8",
+    "@nomicfoundation/hardhat-toolbox-viem": "^3.0.0",
+    "hardhat": "^2.22.17"
+  }
+}
