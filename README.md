@@ -1,4 +1,4 @@
-# Conflux DevKit Template
+# Conflux ESpace HardHat Template
 ## Instructions
 you can find additional informations and details on how to use this repository in the [wiki](https://github.com/cfxdevkit/espace-hardhat-template/wiki) 
 ## Overview
