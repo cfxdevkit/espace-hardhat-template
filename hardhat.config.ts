@@ -4,7 +4,7 @@ import { vars } from "hardhat/config";
 import "@nomicfoundation/hardhat-ignition-viem";
 import "@nomicfoundation/hardhat-toolbox-viem";
 
-import "./scripts/tasks"
+import "./tasks"
 
 const deployer_mnemonic = vars.get("DEPLOYER_MNEMONIC")
 

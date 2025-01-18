@@ -10,6 +10,7 @@ function devChain(hre: HardhatRuntimeEnvironment) {
         id: hre.network.config.chainId!,
         name: hre.network.name,
         rpcUrls: {
+            //@ts-ignore
             default: { http: [hre.network.config.url] },
         },
         nativeCurrency: {
