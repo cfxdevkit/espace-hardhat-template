@@ -11,5 +11,6 @@ task("accounts", "Show the available accounts").setAction(accounts);
 task("balance", "Show the balance for the configured networks").setAction(balance);
 
 task("test-abi", "Show the available methods in the Lock contract")
+  .addParam("artifact", "The artifact name")
   .addParam("address", "The address of the deployed Lock contract")
   .setAction(test_abi);

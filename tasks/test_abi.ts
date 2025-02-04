@@ -1,15 +1,18 @@
 import { HardhatRuntimeEnvironment } from "hardhat/types";
 import { getPublicClient } from "./utils";
-import { formatEther, Address } from "viem";
+import { Address, getContract } from "viem";
 
 export async function test_abi(
-  args: { address?: string },
+  args: { artifact: string, address?: string },
   hre: HardhatRuntimeEnvironment
 ) {
-  const artifact = await hre.artifacts.readArtifact("Lock");
+  const artifact = await hre.artifacts.readArtifact(args.artifact);
   const abi = artifact.abi;
-
-  const publicClient = await getPublicClient(hre);
+  
+  if (!args.artifact) {
+    console.log("Please provide a contract artifact using --artifact flag");
+    return;
+  }
   
   if (!args.address) {
     console.log("Please provide a contract address using --address flag");
@@ -19,12 +22,17 @@ export async function test_abi(
   // Ensure address is properly formatted
   const contractAddress = args.address as Address;
 
-  console.log("Available methods in Lock contract:");
+  console.log(`Available methods in ${args.artifact} contract:`);
   console.log("-----------------------------------");
   
   try {
     // Get deployed contract instance
-    const Lock = await hre.viem.getContractAt("Lock", contractAddress);
+    const publicClient = await getPublicClient(hre);
+    const Contract = getContract({
+      address: contractAddress,
+      abi: abi,
+      client: publicClient
+    });
     
     // Filter and display functions from the ABI
     for (const item of abi) {
@@ -37,12 +45,9 @@ export async function test_abi(
         // Call view methods
         if (item.stateMutability === "view") {
           try {
-            const result = await Lock.read[item.name as keyof typeof Lock.read]();
-            if (typeof result === 'bigint') {
-              console.log(`Current value: ${formatEther(result)} CFX`);
-            } else {
-              console.log(`Current value: ${result}`);
-            }
+            //@ts-ignore
+            const result = await Contract.read[item.name as keyof typeof Contract.read]();
+            console.log(`Current value: ${result}`);
           } catch (error: any) {
             console.log(`Error reading ${item.name}: ${error?.message || 'Unknown error'}`);
           }
