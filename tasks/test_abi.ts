@@ -6,7 +6,6 @@ export async function test_abi(
   args: { address?: string },
   hre: HardhatRuntimeEnvironment
 ) {
-  // Obtenemos el ABI del artifact en runtime
   const artifact = await hre.artifacts.readArtifact("Lock");
   const abi = artifact.abi;
 
