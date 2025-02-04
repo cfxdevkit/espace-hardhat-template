@@ -1,5 +1,4 @@
 import { HardhatRuntimeEnvironment } from "hardhat/types";
-import LockArtifact from "../artifacts/contracts/Lock.sol/Lock.json";
 import { getPublicClient } from "./utils";
 import { formatEther, Address } from "viem";
 
@@ -7,8 +6,11 @@ export async function test_abi(
   args: { address?: string },
   hre: HardhatRuntimeEnvironment
 ) {
+  // Obtenemos el ABI del artifact en runtime
+  const artifact = await hre.artifacts.readArtifact("Lock");
+  const abi = artifact.abi;
+
   const publicClient = await getPublicClient(hre);
-  const abi = LockArtifact.abi;
   
   if (!args.address) {
     console.log("Please provide a contract address using --address flag");
