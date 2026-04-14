@@ -2,7 +2,7 @@
 
 ## Current Status
 
-This project is currently using **Hardhat 2.27.0** (updated November 18, 2025). Hardhat 3.0 is available but has not been adopted yet due to breaking changes and dependency considerations.
+This project is currently using **Hardhat 2.28.6**. Hardhat 3.x is available but has not been adopted yet due to breaking changes and dependency considerations.
 
 ## Why We Haven't Upgraded to Hardhat 3.0 Yet
 
@@ -11,12 +11,13 @@ This project is currently using **Hardhat 2.27.0** (updated November 18, 2025). 
 - Several ecosystem packages need updates to be compatible with Hardhat 3.0
 
 ### Dependency Vulnerabilities
-While Hardhat 2.27.0 has 13 low-severity vulnerabilities, they are in transitive dependencies:
-- `cookie` (v0.6.0) - Out of bounds character vulnerability
-- `tmp` (v0.2.3) - Symbolic link vulnerability
-- `solc` (includes vulnerable dependencies)
+After updating to the latest compatible Hardhat 2.x toolchain and applying `npm audit fix`, the remaining vulnerabilities are still in transitive dependencies:
+- `cookie` via `hardhat` / `@sentry/node`
+- `tmp` via `solc`
+- `undici` via `hardhat`
+- `bn.js`, `elliptic`, `lodash`, and `serialize-javascript` through Hardhat 2.x ecosystem packages
 
-These vulnerabilities can only be fully resolved by upgrading to Hardhat 3.0.15, which introduces breaking changes.
+These vulnerabilities cannot be fully resolved without moving to the Hardhat 3.x-compatible plugin line, which introduces breaking changes.
 
 ## When to Upgrade
 
@@ -48,7 +49,7 @@ Consider upgrading to Hardhat 3.0 when:
 When you decide to upgrade to Hardhat 3.0:
 
 ```bash
-# 1. Update hardhat and plugins to 3.0 versions
+# 1. Update hardhat and plugins to 3.x versions
 npm install --save-dev hardhat@^3.0.0
 npm install --save-dev @nomicfoundation/hardhat-toolbox-viem@latest
 npm install --save-dev @nomicfoundation/hardhat-ignition-viem@latest
@@ -70,14 +71,14 @@ npm audit
 
 ## Security Note
 
-The 13 low-severity vulnerabilities in the current setup are:
+The remaining advisories in the current setup are:
 - Primarily in development dependencies (not in production code)
-- Have low attack surface in a typical development environment
-- Do not affect deployed contracts or runtime security
+- Reduced after the latest Hardhat 2.x maintenance pass, but not eliminated
+- Still tied to the Hardhat 2.x ecosystem and its transitive dependency graph
 
 However, for production deployments or if you're concerned about supply chain security, consider upgrading when dependencies are ready.
 
 ---
 
-Last Updated: November 18, 2025
-Current Hardhat Version: 2.27.0
+Last Updated: April 14, 2026
+Current Hardhat Version: 2.28.6
